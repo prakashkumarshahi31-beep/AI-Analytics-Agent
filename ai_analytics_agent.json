@@ -1,0 +1,237 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\ni am your data analyst agent . How can I assist you today?",
+        "options": {
+          "inputPlaceholder": "Type your question..",
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9c50440a-7406-4329-98ab-fb8ad4f06a96",
+      "name": "When chat message received",
+      "webhookId": "1603b3ea-61a2-4433-a5ba-859ebbdf22c0"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an AI Data Analyst Agent.\n\nYour task is to analyze the dataset provided to you and send the analysis results to my email address in a professional email format.\n\nFollow these steps:\n\n1. Analyze the dataset and identify:\n   - Total number of records\n   - Total number of columns\n   - Missing or null values\n   - Duplicate records\n   - Important trends and patterns\n   - Key performance indicators (KPIs)\n   - Top-performing categories or items\n   - Important insights from the data\n   - Any unusual values or anomalies\n\n2. Summarize the analysis in simple, understandable language.\n\n3. Prepare a professional HTML email with the following structure:\n\n   Subject: AI Data Analysis Report\n\n   Email Body:\n\n   Hello Akash,\n\n   Your dataset analysis has been completed successfully.\n\n   DATASET OVERVIEW\n   - Total Records:\n   - Total Columns:\n   - Missing Values:\n   - Duplicate Records:\n\n   KEY FINDINGS\n   - Finding 1\n   - Finding 2\n   - Finding 3\n\n   KEY PERFORMANCE INDICATORS\n   - KPI 1\n   - KPI 2\n   - KPI 3\n\n   DATA QUALITY REPORT\n   - Missing values and their columns\n   - Duplicate records\n   - Data quality issues\n\n   RECOMMENDATIONS\n   - Recommendation 1\n   - Recommendation 2\n   - Recommendation 3\n\n   CONCLUSION\n   Provide a short conclusion summarizing the most important insights.\n\n   Regards,\n   AI Data Analyst Agent\n\n4. Format the email using HTML with:\n   - A professional design\n   - Clear headings and subheadings\n   - Tables for numerical results\n   - Bullet points for insights\n   - Appropriate spacing\n   - A clean, readable layout\n\n5. Use actual values calculated from the dataset.\n   Never invent statistics or insights.\n   If a value cannot be calculated, state that it is unavailable.\n\n6. Send the completed email using the configured Gmail or email-sending tool in n8n.\n\n7. Send the email to my configured recipient email address.\n   If the recipient address is not available, ask me for it.\n\n8. Do not just generate the email text or tell me that the email is ready.\n   Actually execute the email-sending tool and send the email.\n\n9. After sending, confirm whether the email was successfully sent."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "a3743781-f86a-408e-9eca-917848b92106",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        80
+      ],
+      "id": "40ebead4-cba0-4d01-b3ae-c6579eb2d42e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        80
+      ],
+      "id": "5ef60f8b-ba4a-4e17-a6ea-8cc0f0bf37ee",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "pakashkumarshahi31@gmail.com",
+        "subject": "How many rows in dataset",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailHitlTool",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        208
+      ],
+      "id": "07029812-81d7-462d-adfd-b5f81aeb3da2",
+      "name": "Gmail",
+      "webhookId": "c657a6e2-e245-4b25-b876-e27c22a94f88",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "oJhGKWlMAuo1od2x",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "prakashkumarshahi31@gmail.com",
+        "subject": "give rows of datset",
+        "message": "hi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        288,
+        416
+      ],
+      "id": "4e65a9c0-a3d8-4be3-b253-a65eec4b664e",
+      "name": "Send a message in Gmail",
+      "webhookId": "81b8a8ea-3882-42de-ba4c-99b9543c7d8e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "oJhGKWlMAuo1od2x",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/19frWf69GATNdkumaGPeKSHL0I5khnkejsCiShUkooUI/edit?gid=1592321975#gid=1592321975",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1592321975,
+          "mode": "list",
+          "cachedResultName": "netflix data 4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19frWf69GATNdkumaGPeKSHL0I5khnkejsCiShUkooUI/edit#gid=1592321975"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        384,
+        208
+      ],
+      "id": "7e6354b2-d67b-48f4-b954-32a37c5500ce",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ugBOFSR9LUQi9BrB",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gmail",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "db7f92a6-de7c-4a8d-92b8-4482f3b3692a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b0938efe2f33075084fd6f43465646d52a4521d9289d29fed1ac0753e082cf75"
+  },
+  "nodeGroups": [],
+  "id": "M6Jh8sAlBukNVsxW",
+  "tags": []
+}
