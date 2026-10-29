@@ -45,7 +45,6 @@ in a structured format.
 
 ## 📷 Workflow Screenshots
 
-Add screenshots of your actual n8n workflow and analysis output here.
 C:\Users\praka\Downloads\datadrive\project 4
 
 ## 🚀 Future Improvements
